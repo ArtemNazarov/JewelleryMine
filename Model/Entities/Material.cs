@@ -2,9 +2,10 @@ using System.Collections.Generic;
 
 namespace JewelleryMine.Model.Entities
 {
-    public partial class Category
+    public class Material
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

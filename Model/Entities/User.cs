@@ -1,6 +1,6 @@
 using System;
 
-namespace BroochMine.Model.Entities
+namespace JewelleryMine.Model.Entities
 {
     public partial class User
     {
@@ -22,5 +22,6 @@ namespace BroochMine.Model.Entities
         public string DeviceToken { get; set; }
         public int? LastActivityEvent { get; set; }
         public int? DeviceOs { get; set; }
+        public Image Photo { get; set; }
     }
 }

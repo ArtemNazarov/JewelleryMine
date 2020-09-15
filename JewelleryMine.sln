@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroochMine", "BroochMine.csproj", "{3CC316F5-121F-4D10-A065-D4E330F29C7D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroochMineTest", "BroochMineTest\BroochMineTest.csproj", "{1F6C3F65-79F4-4BA1-B4A9-90B7CF784468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelleryMine", "JewelleryMine.csproj", "{3CC316F5-121F-4D10-A065-D4E330F29C7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,6 @@
-namespace BroochMine.Model.Entities
+using System.Collections.Generic;
+
+namespace JewelleryMine.Model.Entities
 {
     public partial class Image
     {
@@ -7,5 +9,13 @@ namespace BroochMine.Model.Entities
         public byte[] ImageContent { get; set; }
         public byte[] SmallPreview { get; set; }
         public byte[] BigPreview { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Jewel> Jewels { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
+
+        
     }
 }
