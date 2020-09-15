@@ -10,7 +10,7 @@ namespace JewelleryMine.Model.Entities
         public string Price { get; set; }
         public int CategoryId { get; set; }
 
-        public string MaterialId { get; set; }
+        public int MaterialId { get; set; }
 
         public int? PhotoId { get; set; }
         public virtual Category Category { get; set; }
