@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JewelleryMine.Migrations
 {
     [DbContext(typeof(JewelContext))]
-    [Migration("20200915211710_InitCreate")]
-    partial class InitCreate
+    [Migration("20200926221324_InitCreateGuid")]
+    partial class InitCreateGuid
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,14 +34,55 @@ namespace JewelleryMine.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Rings"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Watches"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Pendants"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Bracelets"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Chains"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Charms"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Necklace"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Brooches"
+                        });
                 });
 
             modelBuilder.Entity("JewelleryMine.Model.Entities.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<byte[]>("BigPreview")
                         .HasColumnType("bytea");
@@ -62,10 +103,9 @@ namespace JewelleryMine.Migrations
 
             modelBuilder.Entity("JewelleryMine.Model.Entities.Jewel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
@@ -76,8 +116,8 @@ namespace JewelleryMine.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PhotoId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("PhotoId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Price")
                         .HasColumnType("text");
@@ -95,11 +135,11 @@ namespace JewelleryMine.Migrations
 
             modelBuilder.Entity("JewelleryMine.Model.Entities.JewelCollection", b =>
                 {
-                    b.Property<int>("JewelId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("JewelId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("ProductCollectionId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProductCollectionId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("JewelId", "ProductCollectionId");
 
@@ -125,10 +165,9 @@ namespace JewelleryMine.Migrations
 
             modelBuilder.Entity("JewelleryMine.Model.Entities.ProductCollection", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -140,15 +179,14 @@ namespace JewelleryMine.Migrations
 
             modelBuilder.Entity("JewelleryMine.Model.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AuthPhone")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("BithDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CompanyName")
@@ -184,8 +222,8 @@ namespace JewelleryMine.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PhotoId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("PhotoId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Pin")
                         .HasColumnType("text");

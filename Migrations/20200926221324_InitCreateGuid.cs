@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JewelleryMine.Migrations
 {
-    public partial class InitCreate : Migration
+    public partial class InitCreateGuid : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,8 +25,7 @@ namespace JewelleryMine.Migrations
                 name: "Images",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     ImageContent = table.Column<byte[]>(nullable: true),
                     SmallPreview = table.Column<byte[]>(nullable: true),
@@ -54,8 +53,7 @@ namespace JewelleryMine.Migrations
                 name: "ProductCollections",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -67,17 +65,16 @@ namespace JewelleryMine.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
                     Patronymic = table.Column<string>(nullable: true),
-                    BithDate = table.Column<DateTime>(nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: true),
                     CompanyName = table.Column<string>(nullable: true),
                     Position = table.Column<string>(nullable: true),
-                    PhotoId = table.Column<int>(nullable: true),
+                    PhotoId = table.Column<Guid>(nullable: true),
                     Guid = table.Column<string>(nullable: true),
                     Pin = table.Column<string>(nullable: true),
                     AuthPhone = table.Column<string>(nullable: true),
@@ -102,13 +99,12 @@ namespace JewelleryMine.Migrations
                 name: "Jewels",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
                     MaterialId = table.Column<int>(nullable: false),
-                    PhotoId = table.Column<int>(nullable: true)
+                    PhotoId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,8 +133,8 @@ namespace JewelleryMine.Migrations
                 name: "JewelCollections",
                 columns: table => new
                 {
-                    JewelId = table.Column<int>(nullable: false),
-                    ProductCollectionId = table.Column<int>(nullable: false)
+                    JewelId = table.Column<Guid>(nullable: false),
+                    ProductCollectionId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,6 +151,21 @@ namespace JewelleryMine.Migrations
                         principalTable: "ProductCollections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Rings" },
+                    { 2, "Watches" },
+                    { 3, "Pendants" },
+                    { 4, "Bracelets" },
+                    { 5, "Chains" },
+                    { 6, "Charms" },
+                    { 7, "Necklace" },
+                    { 8, "Brooches" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,4 +1,5 @@
 using System;
+using JewelleryMine.Model.Configuration;
 using JewelleryMine.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -22,10 +23,6 @@ namespace JewelleryMine.Model
 
         public virtual DbSet<JewelCollection> JewelCollections { get; set; }
 
-        // public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
-        //      new ConsoleLoggerProvider()
-        // });
-
         public JewelContext(DbContextOptions<JewelContext> options) : base(options)
         {
 
@@ -38,23 +35,22 @@ namespace JewelleryMine.Model
             {
                 throw new Exception("В OrnamentalContext отсутствует строка подключения.");
             }
-            // optionsBuilder.UseLoggerFactory()
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Jewel>()
-            .HasOne<Category>(jewel => jewel.Category)
+            .HasOne(jewel => jewel.Category)
             .WithMany(category => category.Jewels)
             .HasForeignKey(jewel => jewel.CategoryId);
 
             modelBuilder.Entity<Jewel>()
-            .HasOne<Material>(jewel => jewel.Material)
+            .HasOne(jewel => jewel.Material)
             .WithMany(material => material.Jewels)
             .HasForeignKey(jewel => jewel.MaterialId);
 
             modelBuilder.Entity<Jewel>()
-            .HasOne<Image>(jewel => jewel.Photo)
+            .HasOne(jewel => jewel.Photo)
             .WithMany(image => image.Jewels)
             .HasForeignKey(jewel => jewel.PhotoId);
 
@@ -74,10 +70,7 @@ namespace JewelleryMine.Model
 
             modelBuilder.Entity<ProductCollection>();
 
-            modelBuilder.Entity<Category>()
-            .HasMany(e => e.Jewels)
-            .WithOne(e => e.Category)
-            .HasForeignKey(e => e.CategoryId);
+            modelBuilder.ApplyConfiguration(new CategoriesConfiguration());
 
             modelBuilder.Entity<Material>()
             .HasMany(e => e.Jewels)

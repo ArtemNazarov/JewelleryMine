@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace JewelleryMine.Model.Entities
 {
     public partial class Image
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public byte[] ImageContent { get; set; }
         public byte[] SmallPreview { get; set; }

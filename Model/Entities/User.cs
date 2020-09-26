@@ -4,16 +4,16 @@ namespace JewelleryMine.Model.Entities
 {
     public partial class User
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Surname { get; set; }
         public string Patronymic { get; set; }
-        public DateTime? BithDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string CompanyName { get; set; }
         public string Position { get; set; }
-        public int? PhotoId { get; set; }
+        public Guid? PhotoId { get; set; }
         public string Guid { get; set; }
         public string Pin { get; set; }
         public string AuthPhone { get; set; }
