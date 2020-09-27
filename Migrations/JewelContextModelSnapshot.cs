@@ -37,42 +37,17 @@ namespace JewelleryMine.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Rings"
+                            Name = "Brooches"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Watches"
+                            Name = "Choker"
                         },
                         new
                         {
                             Id = 3,
                             Name = "Pendants"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Bracelets"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Chains"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Charms"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Necklace"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Brooches"
                         });
                 });
 
@@ -84,6 +59,9 @@ namespace JewelleryMine.Migrations
 
                     b.Property<byte[]>("BigPreview")
                         .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<byte[]>("ImageContent")
                         .HasColumnType("bytea");
@@ -108,8 +86,8 @@ namespace JewelleryMine.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("integer");
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -124,8 +102,6 @@ namespace JewelleryMine.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("MaterialId");
-
                     b.HasIndex("PhotoId");
 
                     b.ToTable("Jewels");
@@ -139,6 +115,9 @@ namespace JewelleryMine.Migrations
                     b.Property<Guid>("ProductCollectionId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
                     b.HasKey("JewelId", "ProductCollectionId");
 
                     b.HasIndex("ProductCollectionId");
@@ -146,19 +125,21 @@ namespace JewelleryMine.Migrations
                     b.ToTable("JewelCollections");
                 });
 
-            modelBuilder.Entity("JewelleryMine.Model.Entities.Material", b =>
+            modelBuilder.Entity("JewelleryMine.Model.Entities.Log", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LogMessage")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("JewelleryMine.Model.Entities.ProductCollection", b =>
@@ -166,6 +147,9 @@ namespace JewelleryMine.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -181,35 +165,32 @@ namespace JewelleryMine.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AuthPhone")
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("BrowserType")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("CreateDate")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("DeviceOs")
                         .HasColumnType("integer");
 
-                    b.Property<string>("DeviceToken")
+                    b.Property<string>("DeviceType")
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Guid")
+                    b.Property<string>("IpAddress")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("LastActivityDate")
+                    b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("LastActivityEvent")
-                        .HasColumnType("integer");
+                    b.Property<string>("Locale")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -223,13 +204,22 @@ namespace JewelleryMine.Migrations
                     b.Property<Guid?>("PhotoId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Pin")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("text");
-
                     b.Property<string>("Surname")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UtmCampaign")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UtmContent")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UtmMedium")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UtmSource")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UtmTerm")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -244,12 +234,6 @@ namespace JewelleryMine.Migrations
                     b.HasOne("JewelleryMine.Model.Entities.Category", "Category")
                         .WithMany("Jewels")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JewelleryMine.Model.Entities.Material", "Material")
-                        .WithMany("Jewels")
-                        .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

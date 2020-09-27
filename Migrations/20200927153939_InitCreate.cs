@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JewelleryMine.Migrations
 {
-    public partial class InitCreateGuid : Migration
+    public partial class InitCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,8 @@ namespace JewelleryMine.Migrations
                     Name = table.Column<string>(nullable: true),
                     ImageContent = table.Column<byte[]>(nullable: true),
                     SmallPreview = table.Column<byte[]>(nullable: true),
-                    BigPreview = table.Column<byte[]>(nullable: true)
+                    BigPreview = table.Column<byte[]>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -37,16 +38,16 @@ namespace JewelleryMine.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Materials",
+                name: "Logs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<Guid>(nullable: false),
+                    LogMessage = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Materials", x => x.Id);
+                    table.PrimaryKey("PK_Logs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,11 +55,40 @@ namespace JewelleryMine.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductCollections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Jewels",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    PhotoId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Jewels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Jewels_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Jewels_Images_PhotoId",
+                        column: x => x.PhotoId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,17 +102,19 @@ namespace JewelleryMine.Migrations
                     Surname = table.Column<string>(nullable: true),
                     Patronymic = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: true),
-                    CompanyName = table.Column<string>(nullable: true),
-                    Position = table.Column<string>(nullable: true),
                     PhotoId = table.Column<Guid>(nullable: true),
-                    Guid = table.Column<string>(nullable: true),
-                    Pin = table.Column<string>(nullable: true),
-                    AuthPhone = table.Column<string>(nullable: true),
-                    CreateDate = table.Column<DateTime>(nullable: true),
-                    LastActivityDate = table.Column<DateTime>(nullable: true),
-                    DeviceToken = table.Column<string>(nullable: true),
-                    LastActivityEvent = table.Column<int>(nullable: true),
-                    DeviceOs = table.Column<int>(nullable: true)
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    LastUpdate = table.Column<DateTime>(nullable: true),
+                    BrowserType = table.Column<string>(nullable: true),
+                    DeviceType = table.Column<string>(nullable: true),
+                    DeviceOs = table.Column<int>(nullable: true),
+                    IpAddress = table.Column<string>(nullable: true),
+                    Locale = table.Column<string>(nullable: true),
+                    UtmSource = table.Column<string>(nullable: true),
+                    UtmMedium = table.Column<string>(nullable: true),
+                    UtmCampaign = table.Column<string>(nullable: true),
+                    UtmTerm = table.Column<string>(nullable: true),
+                    UtmContent = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,45 +128,12 @@ namespace JewelleryMine.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Jewels",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Price = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
-                    MaterialId = table.Column<int>(nullable: false),
-                    PhotoId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Jewels", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Jewels_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Jewels_Materials_MaterialId",
-                        column: x => x.MaterialId,
-                        principalTable: "Materials",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Jewels_Images_PhotoId",
-                        column: x => x.PhotoId,
-                        principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "JewelCollections",
                 columns: table => new
                 {
                     JewelId = table.Column<Guid>(nullable: false),
-                    ProductCollectionId = table.Column<Guid>(nullable: false)
+                    ProductCollectionId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,14 +157,9 @@ namespace JewelleryMine.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Rings" },
-                    { 2, "Watches" },
-                    { 3, "Pendants" },
-                    { 4, "Bracelets" },
-                    { 5, "Chains" },
-                    { 6, "Charms" },
-                    { 7, "Necklace" },
-                    { 8, "Brooches" }
+                    { 1, "Brooches" },
+                    { 2, "Choker" },
+                    { 3, "Pendants" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -177,11 +171,6 @@ namespace JewelleryMine.Migrations
                 name: "IX_Jewels_CategoryId",
                 table: "Jewels",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Jewels_MaterialId",
-                table: "Jewels",
-                column: "MaterialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jewels_PhotoId",
@@ -200,6 +189,9 @@ namespace JewelleryMine.Migrations
                 name: "JewelCollections");
 
             migrationBuilder.DropTable(
+                name: "Logs");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -210,9 +202,6 @@ namespace JewelleryMine.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Materials");
 
             migrationBuilder.DropTable(
                 name: "Images");

@@ -11,6 +11,8 @@ namespace JewelleryMine.Model.Entities
         public byte[] SmallPreview { get; set; }
         public byte[] BigPreview { get; set; }
 
+        public DateTime? CreatedOn { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jewel> Jewels { get; set; }
 

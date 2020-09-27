@@ -13,13 +13,13 @@ namespace JewelleryMine.Model
 
         public virtual DbSet<ProductCollection> ProductCollections { get; set; }
 
+        public virtual DbSet<Log> Logs { get; set; }
+
         public virtual DbSet<Category> Categories { get; set; }
 
         public virtual DbSet<Image> Images { get; set; }
 
         public virtual DbSet<User> Users { get; set; }
-
-        public virtual DbSet<Material> Materials { get; set; }
 
         public virtual DbSet<JewelCollection> JewelCollections { get; set; }
 
@@ -33,7 +33,7 @@ namespace JewelleryMine.Model
             //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AgentDress;Trusted_Connection=True;");
             if (!optionsBuilder.IsConfigured)
             {
-                throw new Exception("В OrnamentalContext отсутствует строка подключения.");
+                throw new Exception("В JewelContext отсутствует строка подключения.");
             }
         }
 
@@ -43,11 +43,6 @@ namespace JewelleryMine.Model
             .HasOne(jewel => jewel.Category)
             .WithMany(category => category.Jewels)
             .HasForeignKey(jewel => jewel.CategoryId);
-
-            modelBuilder.Entity<Jewel>()
-            .HasOne(jewel => jewel.Material)
-            .WithMany(material => material.Jewels)
-            .HasForeignKey(jewel => jewel.MaterialId);
 
             modelBuilder.Entity<Jewel>()
             .HasOne(jewel => jewel.Photo)
@@ -72,11 +67,6 @@ namespace JewelleryMine.Model
 
             modelBuilder.ApplyConfiguration(new CategoriesConfiguration());
 
-            modelBuilder.Entity<Material>()
-            .HasMany(e => e.Jewels)
-            .WithOne(e => e.Material)
-            .HasForeignKey(e => e.MaterialId);
-
             modelBuilder.Entity<Image>()
             .HasMany(e => e.Jewels)
             .WithOne(e => e.Photo)
@@ -88,6 +78,7 @@ namespace JewelleryMine.Model
             .HasForeignKey(e => e.PhotoId);
 
             modelBuilder.Entity<User>();
+            modelBuilder.Entity<Log>();
         }
     }
 }

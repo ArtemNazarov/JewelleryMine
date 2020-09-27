@@ -359,7 +359,3 @@ node_modules/
 
 # Visual Studio files
 .vs/
-
-BroochMineTest/
-
-WeatherForecast*.*
