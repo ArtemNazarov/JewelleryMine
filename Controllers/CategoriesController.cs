@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JewelleryMine.Model;
 using JewelleryMine.Model.Entities;
 using Microsoft.Extensions.Logging;
-using JewelleryMine.Domain.DTO;
+using JewelleryMine.Application.DTO;
 
 namespace JewelleryMine.Controllers
 {
@@ -42,7 +42,7 @@ namespace JewelleryMine.Controllers
 
             if (category == null)
             {
-                return NotFound();
+                return NotFound("Category not found");
             }
 
             var categoryDto = new CategoryDto(category);
@@ -58,7 +58,7 @@ namespace JewelleryMine.Controllers
         {
             if (id != categoryDto.Id)
             {
-                return BadRequest();
+                return BadRequest("Incorrect id");
             }
 
             var category = new Category

@@ -5,6 +5,11 @@ namespace JewelleryMine.Model.Entities
 {
     public partial class Image
     {
+        public Image()
+        {
+            Jewels = new HashSet<Jewel>();
+            Users = new HashSet<User>();
+        }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public byte[] ImageContent { get; set; }

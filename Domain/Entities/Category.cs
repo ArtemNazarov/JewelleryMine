@@ -4,6 +4,10 @@ namespace JewelleryMine.Model.Entities
 {
     public partial class Category
     {
+        public Category()
+        {
+            Jewels = new HashSet<Jewel>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
 

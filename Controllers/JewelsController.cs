@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JewelleryMine.Model;
 using JewelleryMine.Model.Entities;
+using JewelleryMine.Application.DTO;
 
 namespace JewelleryMine.Controllers
 {
@@ -23,9 +24,10 @@ namespace JewelleryMine.Controllers
 
         // GET: api/Jewels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Jewel>>> GetJewels()
+        public async Task<ActionResult<IEnumerable<JewelDto>>> GetJewels()
         {
-            return await _context.Jewels.ToListAsync();
+            var jewels = await _context.Jewels.ToListAsync();
+            return jewels.Select(jewel => new JewelDto(jewel)).ToList();
         }
 
         // GET: api/Jewels/5
@@ -36,7 +38,7 @@ namespace JewelleryMine.Controllers
 
             if (jewel == null)
             {
-                return NotFound();
+                return NotFound("Jewel not found");
             }
 
             return jewel;

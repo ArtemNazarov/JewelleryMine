@@ -6,6 +6,10 @@ namespace JewelleryMine.Model.Entities
 {
     public partial class Jewel
     {
+        public Jewel()
+        {
+            JewelCollections = new List<JewelCollection>();
+        }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Price { get; set; }
